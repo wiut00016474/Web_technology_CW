@@ -56,7 +56,45 @@ exports.seeCategories = async(req, res) => {
     }
 }
 
+// GET /recipes/:id 
+// show recipes with more details
+exports.seeRecipe = async(req, res) => {
+    try {
+        // grab id of each recipe
+        let recipeId = req.params.id;
 
+        // query on database
+        const recipe = await Recipe.findById(recipeId);
+
+        res.render('recipe', {title: 'Cooking Blog - Recipe', recipe});
+
+
+    } catch (error) {
+        res.satus(500).send({message: error.message || "There is an error"});
+
+    }
+}
+
+
+
+// GET /categories/:id 
+// show categories by Id
+exports.seeCategoriesById = async(req, res) => {
+    try {
+        // grab id of each category
+        let categoryId = req.params.id;
+
+        // query on database
+        const categoryById = await Recipe.find({'category' : categoryId});
+
+        res.render('categories', {title: 'Cooking Blog - Categories', categoryById});
+
+
+    } catch (error) {
+        res.satus(500).send({message: error.message || "There is an error"});
+
+    }
+}
 
 
 

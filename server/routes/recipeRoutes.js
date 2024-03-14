@@ -4,8 +4,12 @@ const recipeController = require('../controllers/recipeController'); // include 
 
 // app routes (list of all pages, will be linked to controller)
 router.get('/', recipeController.homepage)
+// create a route to get a closer look at recipes
+router.get('/recipe/:id', recipeController.seeRecipe);
 // create a route to get categories 
-router.get('/categories', recipeController.seeCategories)
+router.get('/categories', recipeController.seeCategories);
+// a route to get a closer look at recipe categories
+router.get('/categories/:id', recipeController.seeCategoriesById);
 
 
 // to use this route we need to export this
