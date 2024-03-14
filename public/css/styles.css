@@ -1,0 +1,32 @@
+.container-xxl {
+    max-width: 1510px;
+}
+
+body {
+    background-image: url("/images/background-img.jpg");
+}
+
+/* for category cards */
+
+/* styling links */
+.category_link {
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+
+/* styling images */
+.category__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin-bottom: 10px;
+    box-shadow: 0px 3px 6px rgba(0,0,0,.16);
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.category__img--large {
+    height: 330px;
+}
