@@ -1,0 +1,65 @@
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Share your recipe</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead">Are you passionate about cooking? Do you have a secret family recipe that has been passed down for generations? Or perhaps you've stumbled upon a unique and delicious creation of your own? Sharing your recipes with others can be an incredibly rewarding experience, benefiting both you and the wider community of food enthusiasts.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-8">
+
+        <form action="/share-recipe" method="POST" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-12">
+                   <label for="email" class="form-label">Email</label>
+                    <input required type="email" class="form-control" name="email" id="email">
+                </div>
+
+                <div class="col-12">
+                    <label for="name" class="form-label">Dish name</label>
+                     <input required type="text" name="name" class="form-control" id="name">
+                 </div>
+
+                 <div class="col-12">
+                    <label for="description" class="form-label">Decription</label>
+                     <textarea required name="description" id="description" class="form-control" cols="30" rows="5"></textarea>
+                 </div>
+
+                 <div class="col-12">
+                    <label for="ingredients" class="form-label">Ingredients</label>
+                     <div class="ingredientList">
+                        <div class="ingredientDiv mb-1">
+                    <input required type="text" name="ingredients" id="ingredients" class="form-control">
+                 </div>
+                </div>
+            </div>
+
+                 <div class="col-12">
+                    <button id="addIngredientsButton" type="button" class="btn btn-outline-primary">Add Ingredient</button>
+                 </div>
+
+                 <div class="col-12">
+                    <label class="form-label" for="category">Select Category</label>
+                    <select name="category" class="form-select form-control" aria-label="Category">
+                        <option selected>Select category</option>
+                        <option value="Uzbek">Uzbek</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Chinese">Chinese</option>
+                    </select>
+                 </div>
+
+                 <div class="col-12">
+                    <label class="form-label" for="image">Product Image</label>
+                    <input required type="file" class="form-control" name="image" accept="image/*">
+
+                 </div>
+
+                 <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Submit recipe</button>
+                 </div>
+            </div>
+        </form>
+
+    </div>
+</div>

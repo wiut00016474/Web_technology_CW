@@ -10,6 +10,15 @@ router.get('/recipe/:id', recipeController.seeRecipe);
 router.get('/categories', recipeController.seeCategories);
 // a route to get a closer look at recipe categories
 router.get('/categories/:id', recipeController.seeCategoriesById);
+// a route for explore latest button
+router.get('/explore-latest', recipeController.exploreLatest)
+// a route to submit recipe
+router.get('/share-recipe', recipeController.submitRecipe)
+
+// post to the search page
+router.post('/search', recipeController.searchRecipe);
+// submitting recipes
+router.post('/share-recipe', recipeController.submitRecipePost);
 
 
 // to use this route we need to export this

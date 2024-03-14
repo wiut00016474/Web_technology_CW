@@ -31,7 +31,7 @@ exports.homepage = async(req, res) => {
 
 
     } catch (error) {
-        res.satus(500).send({message: error.message || "There is an error"});
+        res.status(500).send({message: error.message || "There is an error"});
 
     }
 }
@@ -51,7 +51,7 @@ exports.seeCategories = async(req, res) => {
 
 
     } catch (error) {
-        res.satus(500).send({message: error.message || "There is an error"});
+        res.status(500).send({message: error.message || "There is an error"});
 
     }
 }
@@ -70,7 +70,7 @@ exports.seeRecipe = async(req, res) => {
 
 
     } catch (error) {
-        res.satus(500).send({message: error.message || "There is an error"});
+        res.status(500).send({message: error.message || "There is an error"});
 
     }
 }
@@ -91,11 +91,168 @@ exports.seeCategoriesById = async(req, res) => {
 
 
     } catch (error) {
-        res.satus(500).send({message: error.message || "There is an error"});
+        res.status(500).send({message: error.message || "There is an error"});
 
     }
 }
 
+
+
+// GET /explore-latest 
+// show latest recipes
+exports.exploreLatest = async(req, res) => {
+    try {
+        const limitNum = 20;
+        // get latest recipes
+        const recipe = await Recipe.find({}).sort({_id: -1}).limit(limitNum);
+        
+        res.render('exploreLatest', {title: 'Cooking Blog - Categories', recipe});
+
+
+    } catch (error) {
+        res.status(500).send({message: error.message || "There is an error"});
+
+    }
+}
+
+// GET /submit-recipe
+// allow submitting recipes
+exports.submitRecipe = async(req, res) => {
+    try {
+        res.render('submitRecipe', {title: 'Cooking Blog - Submit your recipe'});
+
+
+    } catch (error) {
+        res.status(500).send({message: error.message || "There is an error"});
+    }
+}
+
+
+
+
+// this function currently works if it is hardcoded
+// POST /submit-recipe
+// allow submitting recipes
+exports.submitRecipePost = async(req, res) => {
+    try {
+
+        // to get uploaded image
+        let imageUploadFile;
+        let uploadPath;
+        let newImageName;
+
+        if(!req.files || Object.keys(req.files).length === 0){
+            console.log('No files were uploaded')
+        } else {
+            imageUploadFile = req.files.image;
+            newImageName = Date.now()+imageUploadFile.name;
+            uploadPath = require('path').resolve('./') + '/public/uploads' + newImageName;
+
+            imageUploadFile.mv(uploadPath, function(err) {
+               if (err) return res.satus(500).send(err); 
+            })
+        }
+
+
+
+    
+        
+        // submitting data to the database
+        const newRecipe = new Recipe({
+            name: req.body.name,
+            description: req.body.description,
+            email: req.body.email,
+            ingredients: req.body.ingredients,
+            category: req.body.category,
+            image: newImageName
+
+        });
+        // save the data
+        await newRecipe.save();
+
+
+        
+        res.redirect('/share-recipe');
+
+
+    } catch (error) {
+        res.status(500).send({message: error.message || "There is an error"});
+    }
+}
+
+
+// hardcoded version
+exports.submitRecipePost = async(req,res) =>{
+    try{
+        // submitting data to the database
+        const newRecipe = new Recipe({
+            name: "Adfg",
+            description: "gsdfvjhwf",
+            email: "hbfebf",
+            ingredients: "jrgnkjer",
+            category: "Uzbek",
+            image: "gfeg.jpg"
+
+        });
+        // save the data
+        await newRecipe.save();
+
+    } catch{
+        res.status(500).send({message: error.message || "There is an error"});
+
+
+    }
+}
+//submitRecipePost();
+
+
+
+
+
+// POST /search
+// search recipes
+
+exports.searchRecipe = async(req, res) => {
+    try {
+        // get search phrase
+        let searchTerm = req.body.searchTerm
+
+        // query on database
+        let recipe = await Recipe.find({ $text: {$search: searchTerm, $diacriticSensitive: true} });
+         
+        // render the recipe data
+        res.render('search', {title: 'Cooking Blog - Search', recipe});        
+    } catch (error) {
+        res.status(500).send({message: error.message || "There is an error"});
+    }
+
+}
+
+
+// update recipe
+async function updateRecipe(){
+    try {
+        const res = await Recipe.updateOne({name: "Osh"}, {name: 'New Recipe Updated'});
+        res.n; // number of documents matched
+        res.nModified;
+    } catch (error){
+        console.log(error)
+    }
+}
+// updateRecipe();
+
+
+
+
+// delete recipe
+async function deleteRecipe(){
+    try {
+       await Recipe.deleteOne({name: 'New Recipe Updated'});
+    } catch (error){
+        console.log(error)
+    }
+}
+// deleteRecipe();
 
 
 
