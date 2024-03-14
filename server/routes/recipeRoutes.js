@@ -7,5 +7,6 @@ router.get('/', recipeController.homepage)
 // create a route to get categories 
 router.get('/categories', recipeController.seeCategories)
 
+
 // to use this route we need to export this
 module.exports = router;

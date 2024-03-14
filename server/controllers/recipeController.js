@@ -15,8 +15,17 @@ exports.homepage = async(req, res) => {
         const categories = await Category.find({}).limit(limitNum);
         // get the latest recipes only
         const latestRecipe = await Recipe.find({}).sort({_id: -1}).limit(limitNum);
+        
 
-        const food = {latestRecipe};
+        // recipes of all categories
+        const italian = await Recipe.find({'category':'Italian'}).limit(limitNum);
+        const uzbek = await Recipe.find({'category':'Uzbek'}).limit(limitNum);
+        const chinese = await Recipe.find({'category':'Chinese'}).limit(limitNum);
+        const mexican = await Recipe.find({'category':'Mexican'}).limit(limitNum);
+
+        // pass all of these as a whole
+        const food = {latestRecipe, italian, uzbek, chinese, mexican};
+
 
         res.render('index', {title: 'Cooking Blog - Home', categories, food});
 
